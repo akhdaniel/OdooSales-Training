@@ -1,5 +1,6 @@
 package com.vitraining.odoosales;
 
+import android.content.Intent;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -73,7 +74,11 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     String uid = result.toString();
                     SharedData.setKey(MainActivity.this, "uid", uid);
-                    odoo.MessageDialog(MainActivity.this, "Login succeeded. uid=" + uid);
+                    //odoo.MessageDialog(MainActivity.this, "Login succeeded. uid=" + uid);
+
+                    Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                    MainActivity.this.startActivity(intent);
+
                 }
             }
             Looper.loop();

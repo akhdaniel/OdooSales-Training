@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.timroes.axmlrpc.XMLRPCCallback;
@@ -49,5 +50,20 @@ public class OdooUtility {
                     dialog.dismiss();
                 }
             }).create().show();
+    }
+
+
+    public long search_read(XMLRPCCallback listener,
+                            String db,
+                            String uid,
+                            String password,
+                            String object,
+                            List condition,
+                            Map<String, List> fields){
+
+        long id = client.callAsync(listener, "execute_kw", db, Integer.parseInt(uid), password, object,
+                "search_read", condition, fields);
+        return id;
+
     }
 }
