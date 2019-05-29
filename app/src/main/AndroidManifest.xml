@@ -3,6 +3,8 @@
     package="com.vitraining.odoosales">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -19,7 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MenuActivity" />
-        <activity android:name=".CustomerListActivity"></activity>
+        <activity android:name=".CustomerListActivity" />
+        <activity android:name=".CustomerFormActivity"></activity>
     </application>
 
 </manifest>

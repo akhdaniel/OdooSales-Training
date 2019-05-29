@@ -1,5 +1,6 @@
 package com.vitraining.odoosales;
 
+import android.content.Intent;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -90,12 +91,24 @@ public class CustomerListActivity extends AppCompatActivity {
                 int itemPosition = position;
                 String itemValue = (String) listViewPartner.getItemAtPosition(position);
 
-                Toast.makeText(getApplicationContext(),
+                /*Toast.makeText(getApplicationContext(),
                         "Position "+itemPosition + " ListItem " + itemValue,
                         Toast.LENGTH_LONG).show();
+                */
+
+                Intent intent = new Intent(CustomerListActivity.this, CustomerFormActivity.class);
+                intent.putExtra("name", itemValue);
+                CustomerListActivity.this.startActivity(intent);
+
 
             }
         });
+    }
+
+    public void onAddPartnerClick(View v){
+        Intent intent = new Intent(CustomerListActivity.this,
+                CustomerFormActivity.class);
+        CustomerListActivity.this.startActivity(intent);
     }
 
 

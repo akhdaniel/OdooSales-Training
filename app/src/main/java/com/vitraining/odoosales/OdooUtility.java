@@ -66,4 +66,84 @@ public class OdooUtility {
         return id;
 
     }
+
+    public static String getString(Map<String, Object> data, String field){
+        String res = "";
+
+        if(data.get(field) instanceof String){
+            res = (String)data.get(field);
+        }
+
+        return res;
+    }
+
+
+    public static M2Ofield getMany2One(Map<String, Object> data, String field){
+
+        M2Ofield res = new M2Ofield();
+        Integer id = 0;
+        String value = "";
+
+        // [12, "Indonesia"]
+        if (data.get(field) instanceof Object[]){
+            Object[] tmp = (Object[]) data.get(field);
+            if(tmp.length>0){
+                id = (Integer) tmp[0];
+                value = (String) tmp[1];
+            }
+        }
+
+        res.id = id;
+        res.value = value;
+        return res;
+    }
+
+
+    public long update(XMLRPCCallback listener,
+                       String db,
+                       String uid,
+                       String password,
+                       String object,
+                       List data){
+
+        long id = client.callAsync(listener, "execute_kw",
+                db, Integer.parseInt(uid),
+                password, object, "write", data);
+
+        return id;
+
+    }
+
+    public long create(XMLRPCCallback listener,
+                       String db,
+                       String uid,
+                       String password,
+                       String object,
+                       List data){
+        long id = client.callAsync(listener, "execute_kw",
+                db, Integer.parseInt(uid), password,
+                object, "create", data);
+
+        return id;
+
+    }
+
+    public long delete(XMLRPCCallback listener,
+                       String db,
+                       String uid,
+                       String password,
+                       String object,
+                       List data){
+        long id = client.callAsync(listener, "execute_kw",
+                db, Integer.parseInt(uid), password, object,
+                "unlink", data);
+
+        return id;
+    }
+}
+
+
+class M2Ofield {
+    public Integer id;
+    public String value;
 }
