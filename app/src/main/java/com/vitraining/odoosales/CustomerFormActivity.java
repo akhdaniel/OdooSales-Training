@@ -1,14 +1,17 @@
 package com.vitraining.odoosales;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Looper;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -81,10 +84,22 @@ public class CustomerFormActivity extends AppCompatActivity implements LocationL
     }
 
     private void enableGPS(){
+
+        //Runtime permission request
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                Toast.makeText(getApplicationContext(), "<Explanation of permission request goes here>", Toast.LENGTH_SHORT).show();
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            }
+        }
+
+
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         Criteria criteria = new Criteria();
         provider = locationManager.getBestProvider(criteria, false);
+        locationManager.requestLocationUpdates(provider,400,1,this);
         Location location = locationManager.getLastKnownLocation(provider);
 
         if (location != null){
@@ -167,7 +182,7 @@ public class CustomerFormActivity extends AppCompatActivity implements LocationL
         // [ [["name","=",name]] ]
         List condition = Arrays.asList(
                 Arrays.asList(
-                        Arrays.asList("name","=", name)
+                        Arrays.asList("display_name","=", name)
                 )
         );
 
